@@ -36,7 +36,7 @@ function Datepicker() {
 		dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], // For formatting
 		dayNamesMin: ['Su','Mo','Tu','We','Th','Fr','Sa'], // Column headings for days starting at Sunday
 		weekHeader: 'Wk', // Column header for week of the year
-		dateFormat: 'YYYY-MM-DDThh:mm:ssTZD',// See format options on parseDate
+		dateFormat: 'YY-MM-DD'T'hh:mm:ssTZD',// See format options on parseDate
 		firstDay: 0, // The first day of the week, Sun = 0, Mon = 1, ...
 		isRTL: false, // True if right-to-left language, false if left-to-right
 		showMonthAfterYear: false, // True if the year select precedes month, false for month then year
@@ -118,9 +118,6 @@ $.extend(Datepicker.prototype, {
 		return this;
 	},
 
-	/* Attach the date picker to a jQuery selection.
-	   @param  target    element - the target input field or division or span
-	   @param  settings  object - the new settings to use for this date picker instance (anonymous) */
 	_attachDatepicker: function(target, settings) {
 		// check for settings on the control itself - in namespace 'date:'
 		var inlineSettings = null;
