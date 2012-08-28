@@ -1,15 +1,3 @@
-/*
- * jQuery UI Datepicker 1.8.13
- *
- * Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
- * Dual licensed under the MIT or GPL Version 2 licenses.
- * http://jquery.org/license
- *
- * http://docs.jquery.com/UI/Datepicker
- *
- * Depends:
- *	jquery.ui.core.js
- */
 (function( $, undefined ) {
 
 $.extend($.ui, { datepicker: { version: "1.8.13" } });
@@ -18,10 +6,6 @@ var PROP_NAME = 'datepicker';
 var dpuuid = new Date().getTime();
 var instActive;
 
-/* Date picker manager.
-   Use the singleton instance of this class, $.datepicker, to interact with the date picker.
-   Settings for (groups of) date pickers are maintained in an instance object,
-   allowing multiple different settings on the same page. */
 
 function Datepicker() {
 	this.debug = false; // Change this to true to start debugging
@@ -52,7 +36,7 @@ function Datepicker() {
 		dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], // For formatting
 		dayNamesMin: ['Su','Mo','Tu','We','Th','Fr','Sa'], // Column headings for days starting at Sunday
 		weekHeader: 'Wk', // Column header for week of the year
-		dateFormat: 'yy-mm-dd', // See format options on parseDate
+		dateFormat: 'yyyy-MM-dd:HH:mm:ss Z',// See format options on parseDate
 		firstDay: 0, // The first day of the week, Sun = 0, Mon = 1, ...
 		isRTL: false, // True if right-to-left language, false if left-to-right
 		showMonthAfterYear: false, // True if the year select precedes month, false for month then year
