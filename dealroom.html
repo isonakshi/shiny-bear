@@ -152,11 +152,11 @@ function onGroupCreated(response) {
 
 	//Project creation within the newly created group
 	
-	var pStartDateEntry = $("#project-start-date").val(); //Project Start
+	var pStartDateEntry = $("#datepicker1").val(); //Project Start
 	var pStartDateAbs = new Date(pStartDateEntry);
 	var pStartDate = ISODateString(pStartDateAbs);
 	
-	var pDueDateEntry = $("#project-due-date").val(); //Project Start
+	var pDueDateEntry = $("#datepicker2").val(); //Project Start
 	var pDueDateAbs = new Date(pDueDateEntry);
 	var pDueDate = ISODateString(pDueDateAbs);
 	
@@ -228,13 +228,13 @@ gadgets.util.registerOnLoadHandler(init);
 		    <tr>
 		        <th>Project Start Date (YYYY/MM/DD):</th>
 		        <td>
-		            <input id="datepicker1" class="date-pick" type="text" />
+		            <input id="datepicker1" class="group-input" type="text" />
 		        </td>
 		    </tr>
 		    <tr>
 		        <th>Project Due Date (YYYY/MM/DD):</th>
 		        <td>
-		            <input id="datepicker2" class="date-pick" type="text"/>
+		            <input id="datepicker2" class="group-input" type="text"/>
 		        </td>
 		    </tr>			
 		    <tr>
