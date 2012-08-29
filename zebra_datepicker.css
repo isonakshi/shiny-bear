@@ -52,13 +52,13 @@
 .Zebra_DatePicker td.dp_disabled            { background: #F3F3F3; color: #CDCDCD; cursor: default }
 .Zebra_DatePicker td.dp_hover               { background: #482424; color: #FFF }
 
-input.Zebra_DatePicker_Icon                { position: absolute; background: url('images/calendar.png') no-repeat left top; text-indent: -9000px; border: none; cursor: pointer; margin: 0 0 0 5px; padding: 0; line-height: 0 }
-input.Zebra_DatePicker_Icon_Disabled       { background-image: url('calendar-disabled.png') }
-input.Zebra_DatePicker_Icon_Inside         { margin: 0 0 0 2px }
+button.Zebra_DatePicker_Icon                { position: absolute; background: url('images/calendar.png') no-repeat left top; text-indent: -9000px; border: none; cursor: pointer; margin: 0 0 0 5px; padding: 0; line-height: 0 }
+button.Zebra_DatePicker_Icon_Disabled       { background-image: url('calendar-disabled.png') }
+button.Zebra_DatePicker_Icon_Inside         { margin: 0 0 0 2px }
 
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-    input.Zebra_DatePicker_Icon_Inside     { margin: 0 5px 0 0 }
+    button.Zebra_DatePicker_Icon_Inside     { margin: 0 5px 0 0 }
 
 }
 
