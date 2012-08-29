@@ -1,18 +1,8 @@
-/*
-
-    Zebra_DatePicker: a lightweight jQuery date picker plugin
-
-    default stylesheet
-    copyright (c) 2011 - 2012 Stefan Gabos
-    http://stefangabos.ro/jquery/zebra-datepicker/
-
-*/
 
 .Zebra_DatePicker *                          { margin: 0; padding: 0; color: #000 }
 .Zebra_DatePicker                            { position: absolute; background: #666; border: 3px solid #666; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; display: none; z-index: 100; font-family: Tahoma, Arial, Helvetica, sans-serif; font-size: 13px }
 
-/* = GLOBALS
-----------------------------------------------------------------------------------------------------------------------*/
+
 .Zebra_DatePicker table                      { border-collapse: collapse; border-spacing: 0 }
 
 .Zebra_DatePicker td,
@@ -29,8 +19,6 @@
 .Zebra_DatePicker .dp_monthpicker td,
 .Zebra_DatePicker .dp_yearpicker td         { background: #E8E8E8; width: 30px; border: 1px solid #7BACD2 }
 
-/* = HEADER
-----------------------------------------------------------------------------------------------------------------------*/
 .Zebra_DatePicker .dp_header td             { color: #FFF }
 
 .Zebra_DatePicker .dp_header .dp_previous,
@@ -40,8 +28,7 @@
 .Zebra_DatePicker .dp_header .dp_hover      { background: #222; color: #FFF; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px }
 .Zebra_DatePicker .dp_header .dp_blocked    { color: #888; cursor: default }
 
-/* = DATEPICKER
-----------------------------------------------------------------------------------------------------------------------*/
+
 .Zebra_DatePicker .dp_daypicker th          { background: #FFCC33 }
 .Zebra_DatePicker td.dp_not_in_month        { background: #F3F3F3; color: #CDCDCD; cursor: default }
 .Zebra_DatePicker td.dp_weekend             { background: #D8D8D8 }
