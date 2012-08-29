@@ -9,17 +9,15 @@
 <link type="text/css" href="css/security-groups.css" rel="stylesheet"/>
 <link type="text/css" href="style.css" rel="stylesheet"/>
 		
-<script type="text/javascript" src="zebra_datepicker.js"></script>
-<link rel="stylesheet" href="zebra_datepicker.css" type="text/css"/>
-<script type="text/javascript">
-$(document).ready(function() {
-
-   
-    $('input.datepicker').Zebra_DatePicker();
-	$('#datepicker-example1').Zebra_DatePicker();
-	$('#datepicker-example2').Zebra_DatePicker();
-
- });
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  
+ <script type="text/javascript">
+  $(document).ready(function() {
+    $("#datepicker1").datepicker();
+	$("#datepicker2").datepicker();
+  });
 // Templates' IDs for the current AI instance
 var templateSpace = "/places/1060"; //actually, a SPACE
 var templateSpaceURI = "https://accenture.jiveon.com/community/deal-room-template";
@@ -151,11 +149,11 @@ function onGroupCreated(response) {
 
 	//Project creation within the newly created group
 	
-	var pStartDateEntry = $("#datepicker-example1").val(); //Project Start
+	var pStartDateEntry = $("#datepicker1").val(); //Project Start
 	var pStartDateAbs = new Date(pStartDateEntry);
 	var pStartDate = ISODateString(pStartDateAbs);
 	
-	var pDueDateEntry = $("#datepicker-example2").val(); //Project Start
+	var pDueDateEntry = $("#datepicker2").val(); //Project Start
 	var pDueDateAbs = new Date(pDueDateEntry);
 	var pDueDate = ISODateString(pDueDateAbs);
 	
@@ -226,10 +224,10 @@ gadgets.util.registerOnLoadHandler(init);
 		   <label>Project Start Date:</label>
 
 		        
-		            <input id="datepicker-example1" type="text"/>
+		            <input id="datepicker1" type="text"/>
 		        <label>Project Due Date</label>
 
-		            <input id="datepicker-example2" type="text"/>
+		            <input id="datepicker2" type="text"/>
 		       
 		            <button id="group-create-button">Create Deal Room</button>
 		        
