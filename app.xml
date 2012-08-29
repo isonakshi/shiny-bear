@@ -30,5 +30,5 @@
     <Link rel="MediumIcon" href="images/icon48.png" />
     <Link rel="LargeIcon"  href="images/icon128.png" />
     </ModulePrefs>
-    <Content view="home, canvas" type="html" href="dealroom.html" preferred_height="900"/>
+    <Content view="home, canvas" type="html" href="dealroom.html" preferred_height="400"/>
 </Module>
