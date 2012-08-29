@@ -1,30 +1,244 @@
+
 <html>
 <head>
+
+
+<link type="text/css" href="css/custom-theme/jquery-ui-1.8.16.custom.css" rel="stylesheet"/>
+<link type="text/css" href="css/custom-theme/jive-elements.css" rel="stylesheet"/>
+<link type="text/css" href="css/custom-theme/jive-icons.css" rel="stylesheet"/>
+<link type="text/css" href="css/security-groups.css" rel="stylesheet"/>
 <link type="text/css" href="style.css" rel="stylesheet"/>
+		
+<script type="text/javascript" src="zebra_datepicker.js"></script>
+<link rel="stylesheet" href="zebra_datepicker.css" type="text/css"/>
+<script type="text/javascript">
+$(document).ready(function() {
+
+   
+    $('input.datepicker').Zebra_DatePicker();
+	$('#datepicker-example1').Zebra_DatePicker();
+	$('#datepicker-example2').Zebra_DatePicker();
+
+ });
+// Templates' IDs for the current AI instance
+var templateSpace = "/places/1060"; //actually, a SPACE
+var templateSpaceURI = "https://accenture.jiveon.com/community/deal-room-template";
+var templateProject = "/places/1001";
+var templateProjectURI = "https://accenture.jiveon.com/community/deal-room-template/projects/rfp-response-template-project";
+
+// Flag indicating we are in add mode
+var adding = true;
+
+// Jive Group selector
+var group;
+var sourceSpace;
+
+// Jive Project selector
+var project;
+var sourceProject;
+
+// Factory for mini messages
+var mini;
+
+// IDs
+var targetGroupID = "";
+var targetProjID = "";
+
+// On view load, wire up static actions and retrieve initial data
+function init() {
+    osapi.jive.corev3.people.getViewer({}).execute(function(response) {});
+    $("#group-create-button").click(onGroupSave);
+    mini = new gadgets.MiniMessage();
+}
+
+
+/* use a function for the exact format desired... */
+/* for ISO 8601 Date */
+function ISODateString(d){
+  function pad(n){return n<10 ? '0'+n : n}
+  return d.getUTCFullYear()+'-'
+      + pad(d.getUTCMonth()+1)+'-'
+      + pad(d.getUTCDate())+'T'
+      + pad(d.getUTCHours())+':'
+      + pad(d.getUTCMinutes())+':'
+      + pad(d.getUTCSeconds())+'.000+0000'
+}
+
+function onContentCreated (response) {
+    if (response.error) {
+        mini.createDismissibleMessage("Unable to create discussions: " + response.error.message);
+        return;
+    }
+}
+
+function onDiscFetch(response) {
+    if (response.error) {
+        mini.createDismissibleMessage("Unable to fetch discussions: " + response.error.message);
+        return;
+    }
+    var discussions = response.list;
+	var postDisc;
+	
+	$.each(discussions, function(index, group) {
+	postDisc = {
+	type : "",
+	tags : [],
+	subject : "",
+	content : {
+		text : "",
+		type : ""
+	},
+	question : "",
+	parent : ""
+	}
+	
+	postDisc.type = group.type;
+	postDisc.tags = group.tags;
+	postDisc.subject = group.subject;
+	postDisc.content = group.content;
+	postDisc.question = group.question;
+	postDisc.parent = targetGroupID;
+	console.log ("Discussion "+index+" :"+JSON.stringify(postDisc));
+	osapi.jive.corev3.discussions.create(postDisc).execute(onContentCreated);
+	});
+    //console.log ("Discussions: "+JSON.stringify(discussions));
+}
+
+function loadDiscussions(source) {
+osapi.jive.corev3.discussions.get ({
+        fields : '@all',
+	place : source
+    }).execute(onDiscFetch);
+}
+
+
+// Defines what needs to be done once Project is created
+
+function onProjectCreated(response) {
+	if (response.error) {
+	mini.createDismissibleMessage("Error creating new social project: " + response.error.message);
+	}
+	else {
+	//console.log("Project: "+JSON.stringify(response));
+	//mini.createDismissibleMessage("Project created with the ID: " + response.id);
+	var gMessage = document.getElementById("response-message");
+	gMessage.innerHTML = gMessage.innerHTML + "<br />Click <a href=\""+response.resources.html.ref+"\">here</a> to visit the Project";
+	}
+}
+
+// Defines what needs to be done once group is created
+// 1. Copy the contents from template group to the new
+// 2. Create Project
+
+function onGroupCreated(response) {
+	if (response.error) {
+	mini.createDismissibleMessage("Error creating new social group: " + response.error.message);
+	}
+	
+	else {
+	//console.log("Group: "+JSON.stringify(response));
+	//mini.createDismissibleMessage("Group created at: " + response.resources.html.ref);
+	
+	// Setting the GLOBAL so as to use it for the content-load
+	targetGroupID = response.resources.self.ref;
+	console.log("target group ID is:" +targetGroupID);
+	
+	var gMessage = document.getElementById("response-message");
+	gMessage.innerHTML = "Group successfully created. <br /> Click <a href=\""+response.resources.html.ref+"\">here</a> to visit the group";
+	// Add GROUP Content-Copying here!
+	loadDiscussions(templateSpace);
+
+
+	//Project creation within the newly created group
+	
+	var pStartDateEntry = $("#datepicker-example1").val(); //Project Start
+	var pStartDateAbs = new Date(pStartDateEntry);
+	var pStartDate = ISODateString(pStartDateAbs);
+	
+	var pDueDateEntry = $("#datepicker-example2").val(); //Project Start
+	var pDueDateAbs = new Date(pDueDateEntry);
+	var pDueDate = ISODateString(pDueDateAbs);
+	
+	var pName = response.name;
+	//var pParent = response.id;
+	var pParent = response.resources.self.ref;
+	
+	project = {
+		"displayName": "",
+		"name": "",
+		"parent" : "",
+		"contentTypes" : [ "documents", "files", "discussions", "polls", "tasks" ],
+		"startDate" : "",
+		"dueDate" : "",
+		"type" : "project"
+	};
+	
+	sourceProject = project;
+
+	project.displayName = pName;
+	project.name = "Project for " + pName;
+	project.parent = pParent;;
+	project.startDate = pStartDate;
+	project.dueDate = pDueDate;
+	
+	osapi.jive.corev3.projects.create(project).execute(onProjectCreated);
+	}
+}
+
+function onGroupSave() {
+    group = {
+        displayName : "",
+        description : "",
+        followerCount : 0,
+        groupType : "",
+        memberCount : 0,
+        name : "",
+        type : "group"
+    };
+
+    group.description = $("#group-name").val();
+    group.description = "This is a deal room created for collaborating on the deal \"" + group.description + "\"";
+    group.displayName = $("#group-name").val();
+    group.groupType = "PRIVATE";
+    group.contentTypes = [ "documents", "files", "discussions", "polls", "projects" ];
+    group.name = $("#group-name").val();
+    if (adding) {
+        osapi.jive.corev3.groups.create(group).execute(onGroupCreated);
+    }
+}
+
+// Register our on-view-load handler
+gadgets.util.registerOnLoadHandler(init);
+</script>
+
 </head>
+
+<body>
 <div id="stylized" class="myform">
-<form id="form" name="form" method="post" action="index.html">
-<h1>Sign-up form</h1>
-<p>This is the basic look of my form without table</p>
+	<div id="group-div" class="top-level-div">
+		<h3 id="group-header"></h3>
+		<table class="j-table">
+		<label>Deal Room Name
 
-<label>Name
-<span class="small">Add your name</span>
 </label>
-<input type="text" name="name" id="name" />
-
-<label>Email
-<span class="small">Add a valid address</span>
-</label>
-<input type="text" name="email" id="email" />
-
-<label>Password
-<span class="small">Min. size 6 chars</span>
-</label>
-<input type="text" name="password" id="password" />
-
-<button type="submit">Sign-up</button>
-<div class="spacer"></div>
-
-</form>
+<input id="group-name" class="group-input" type="text"/>
+		  
+		   <label>Project Start Date:</label>
+<span class="small">		   (YYYY-MM-DD)</span>
+		        
+		            <input id="datepicker-example1" type="text"/>
+		        <label>Project Due Date</label>
+<span class="small">				(YYYY-MM-DD):</span>
+		            <input id="datepicker-example2" type="text"/>
+		       
+		            <button id="group-create-button">Create Deal Room</button>
+		        
+		</table>
+		<div class="spacer"></div>
+	</div>
+	<div id="response-message"></div>
 </div>
+</body>
 </html>
+
+
