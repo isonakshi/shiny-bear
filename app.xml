@@ -25,7 +25,7 @@
         <Require feature="minimessage"/>
         <Require feature="osapi"/>
         <Require feature="views"/>
-		<Link rel="Icon"       href="images/icon16.png" />
+		
     <Link rel="MediumIcon" href="images/icon48.png" />
     <Link rel="LargeIcon"  href="images/icon128.png" />
     </ModulePrefs>
