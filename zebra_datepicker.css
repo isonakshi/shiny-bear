@@ -63,11 +63,3 @@ button.Zebra_DatePicker_Icon_Inside         { margin: 0 0 0 2px }
 
 }
 
-input.Zebra_DatePicker_Icon                { position: absolute; width: 16px; height: 16px; background: url('calendar.png') no-repeat left top; text-indent: -9000px; border: none; cursor: pointer; margin: 0 0 0 5px; padding: 0; line-height: 0 }
-input.Zebra_DatePicker_Icon_Disabled       { background-image: url('calendar-disabled.png') }
-input.Zebra_DatePicker_Icon_Inside         { margin: 0 0 0 2px }
-
-
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-    input.Zebra_DatePicker_Icon_Inside     { margin: 0 5px 0 0 }
-}
