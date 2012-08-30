@@ -1,6 +1,6 @@
 body{
 font-family:"Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
-font-size:22px;
+font-size:20px;
 }
 p, h1, form, button{border:0; margin:0; padding:0;}
 .spacer{clear:both; height:1px;}
@@ -24,7 +24,6 @@ margin-bottom:8px;
 }
 #stylized p{
 font-size:11px;
-color:#666666;
 margin-bottom:20px;
 border-bottom:solid 1px #b7ddf2;
 padding-bottom:10px;
